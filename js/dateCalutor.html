@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div>
+  <div>
+    <span>日付選択</span>
+    <select id="year"></select>
+    <span>年</span>
+    <select id="month"
+            onchange="showday(this)">
+    </select>
+    <span>月</span>
+    <select
+      id="day"></select>
+    <span>日</span>&emsp;
+    <span>時間選択</span>
+    <select id="hour"></select>
+    <span>時</span>
+    <select id="minute"></select>
+    <span>分</span>
+  </div>
+</div>
+<script>
+  var nowTime = new Date();
+  var years = nowTime.getFullYear();
+  var yearlist = [years - 3, years - 2, years - 1, years, years + 1, years + 2, years + 3];
+  for (let i = 0; i < yearlist.length; i++) {
+    $("#year").append("<option>" + yearlist[i] + "</option>");
+  }
+  for (let i = 1; i < 13; i++) {
+    $("#month").append("<option>" + i + "</option>");
+  }
+  for (let i = 1; i < 32; i++) {
+    $("#day").append("<option>" + i + "</option>");
+  }
+  for (let i = 0; i < 24; i++) {
+    $("#hour").append("<option>" + i + "</option>");
+  }
+  for (let i = 0; i < 60; i++) {
+    $("#minute").append("<option>" + i + "</option>");
+  }
+
+  function showday(month) {
+    if (month.value == 2) {
+      $("#day").empty();
+      for (let i = 1; i < 29; i++) {
+        $("#day").append("<option>" + i + "</option>");
+      }
+    }
+    ;
+    if (month.value == 1 || month.value == 3 || month.value == 5 || month.value == 7 || month.value == 8 || month.value == 10 || month.value == 12) {
+      $("#day").empty();
+      for (let i = 1; i < 32; i++) {
+        $("#day").append("<option>" + i + "</option>");
+      }
+    }
+    ;
+    if (month.value == 4 || month.value == 6 || month.value == 9 || month.value == 11) {
+      $("#day").empty();
+      for (let i = 1; i < 31; i++) {
+        $("#day").append("<option>" + i + "</option>");
+      }
+    }
+  }
+
+  $("#year").val(nowTime.getFullYear());
+  $("#month").val(nowTime.getMonth() + 1);
+  $("#day").val(nowTime.getDate());
+  $("#hour").val(nowTime.getHours());
+  $("#minute").val(nowTime.getMinutes());
+
+  function changeToUTF() {
+    var temp = new Date();
+    temp.setFullYear(Number($("#year").val()), (Number($("#month").val()) - 1), Number($("#day").val()));
+    temp.setHours(Number($("#hour").val()));
+    temp.setMinutes(Number($("#minute").val()));
+    console.log(temp.toString());
+    console.log(temp.getUTCFullYear());
+    console.log(temp.getUTCMonth()+1);
+    console.log(temp.getUTCDate());
+    console.log(temp.getUTCHours());
+    console.log(temp.getMinutes());
+  }
+  changeToUTF();
+
+
+</script>
+</body>
+</html>
